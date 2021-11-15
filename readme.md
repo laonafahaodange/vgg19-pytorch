@@ -412,7 +412,7 @@ if __name__ == '__main__':
 ```
 
 ### 预测结果
-仍然和之前一样，测试图片是网上随便找的5张图片（不排除训练集已经出现过了），预测分类全部正确。
+测试图片是网上随便找的5张图片（不排除训练集已经出现过了），预测分类全部正确。
 ![](/predict_result/daisy.png 'daisy')
 ![](/predict_result/dandelion.png 'dandelion')
 ![](/predict_result/rose.png 'rose')
