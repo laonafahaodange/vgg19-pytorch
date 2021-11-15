@@ -3,17 +3,17 @@ VGG是牛津大学的视觉几何组（Visual Geometry Group）在2015年的论�
 
 ## VGG结构
 论文共设计了5种网络（A~E）来证明网络深度的增加带来的网络性能的提升。
-![](/images/VGG.png 'VGG')
+![](images/VGG.png 'VGG')
 激活函数采用relu，除了A-LRN以外都没有使用LRN，而且发现LRN并不能提高性能，还增加了计算量和计算开销。  
 尽管深度增加了，但是参数并不多于使用大的卷积层的浅层网络（例如Sermanet等人所用的网络，有144M参数）。
-![](/images/VGG_params.png 'VGG参数')
+![](images/VGG_params.png 'VGG参数')
 整个VGG网络使用了非常小的感受野（3x3），步长为1。论文提到2个3x3的卷积层等效于1个5x5的卷积层；3个3x3的卷积层等效于1个7x7的卷积层。  
 感受野的定义如下：  
 
 > 感受野（Receptive Field），指的是神经网络种神经元“看到的”输入区域，在卷积神经网络中，feature map上某个元素的计算受输入图像上某个区域的影响，这个区域即该元素的感受野。
 
 根据定义，我们假设一个7x7的卷积层，则感受野为7x7的一个范围，如图所示
-![](/images/example1.png '7x7感受野示意图')
+![](images/example1.png '7x7感受野示意图')
 
 根据公式
 $$ M=\lfloor\frac{N-kernelsize+2*padding}{stride}+1\rfloor$$
@@ -21,7 +21,7 @@ $$ M=\lfloor\frac{N-kernelsize+2*padding}{stride}+1\rfloor$$
 - N为输入尺寸，M为输出尺寸
 
 代入padding=0，stride=1，我们可以依次计算出经过3个3x3卷积层后输出的尺寸分别为5、3、1，如图所示
-![](/images/example.png '经过3个3x3的卷积层感受野示意图')
+![](images/example.png '经过3个3x3的卷积层感受野示意图')
 可以看到，1个7x7卷积层的感受野等效于经过3个3x3的卷积层的感受野；论文提到的经过2个3x3的卷积层等效于1个5x5的卷积层同理。  
 
 采用连续3个的3x3卷积层而不是单个7x7卷积层的原因：  
@@ -70,27 +70,27 @@ $$ M=\lfloor\frac{N-kernelsize+2*padding}{stride}+1\rfloor$$
 
 ### 单尺度评估
 固定测试集图片的size。另外作者发现LRN并不能提高模型性能，所以网络B-E都没有采用LRN。其次作者发现分类的错误率随着网络深度的增加而减小，这说明尽管额外的非线性确实有帮助，但使用具有非凡（non-trivial）感受野的卷积层来捕获空间上下文也同样重要。测试集单尺度评估的结果如图所示
-![](/images/singletestscale.png '单尺度测试评估')
+![](images/singletestscale.png '单尺度测试评估')
 
 ### 多尺度评估
 测试集图片采取多个size，对类别后验结果取平均。考虑到训练和测试的尺度如果差异太大会导致性能的急剧下降，根据S的形式采用不同的策略
 - 如果训练尺度S为固定值，则$Q=\{S-32,S,S+32\}$
 - 如果训练尺度S为多尺度，即$S\in [S_{min},S_{max}]$，则$Q=\{S_{min},0.5(S_{min}+S_{max}),S_{max}\}$
 多尺度评估结果如图所示
-![](/images/multitestscale.png '多尺度评估')
+![](images/multitestscale.png '多尺度评估')
 
 ### 多裁剪图像评估
 > 原文翻译：
 > 我们将密集评估（应该是上面提到的全连接层换成卷积层的网络）与多裁剪图像评估进行比较。我们还通过平均其soft-max输出来评估两种评估技术的互补性。可以看出，使用多裁剪图像表现比密集评估略好，而且这两种方法确实是互补的，因为它们的组合优于其中的每一种。如上所述，我们假设这是由于卷积边界条件的不同处理所造成的。
 
 多裁剪图像评估结果
-![](/images/multicrop.png '多裁剪图像评估')
+![](images/multicrop.png '多裁剪图像评估')
 
 ### 卷积网络融合
 作者通过对soft-max类别后验概率进行平均，融合了多种模型的输出。由于模型的互补性，性能得到了提高。
-![](/images/multiconvnetfusion.png '卷积网络融合')
+![](images/multiconvnetfusion.png '卷积网络融合')
 此外作者发现采用表现最好的D和E进行融合效果也不错（只融合了两个模型，显著少于当时其它参赛组融合的模型数量）。
-![](/images/comparisonmodelfusion.png '卷积网络融合比较')
+![](images/comparisonmodelfusion.png '卷积网络融合比较')
 
 ## 结论
 深度有利于分类精度，增加传统卷积网络结构的深度可以实现更好的性能。证实了深度在视觉表示中的重要性。
@@ -413,11 +413,11 @@ if __name__ == '__main__':
 
 ### 预测结果
 测试图片是网上随便找的5张图片（不排除训练集已经出现过了），预测分类全部正确。
-![](/predict_result/daisy.png 'daisy')
-![](/predict_result/dandelion.png 'dandelion')
-![](/predict_result/rose.png 'rose')
-![](/predict_result/sunflower.png 'sunflower')
-![](/predict_result/tulip.png 'tulip')
+![](predict_result/daisy.png 'daisy')
+![](predict_result/dandelion.png 'dandelion')
+![](predict_result/rose.png 'rose')
+![](predict_result/sunflower.png 'sunflower')
+![](predict_result/tulip.png 'tulip')
 
 ## 总结
 正如作者提到的那样，网络权重的初始化非常重要。由于深层网络梯度的不稳定性，不当的初始化可能导致学习停止。一开始我在kaggle上训练的时候用的是随机初始化（作者在论文里面对模型A的随机初始化）也发现验证集的准确率和之前在alexnet的训练一样卡在24%，后来尝试加载预训练模型权重后发现改善非常巨大，按照论文的方法训练74个poch（在kaggle上花了90分钟左右），验证集准确率最高达到94%。
